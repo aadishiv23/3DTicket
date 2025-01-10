@@ -12,6 +12,20 @@ struct ContentView: View {
     @State private var rotationAngle: Double = 0
     var body: some View {
         VStack {
+            cardView
+
+            Spacer()
+            Slider(value: $rotationAngle, in: 0...360, step: 1)
+                .padding()
+            Text("\(Double(rotationAngle))")
+                .contentTransition(.numericText(value: rotationAngle))
+        }
+    }
+
+    // MARK: Card View
+
+    private var cardView: some View {
+        ZStack {
             ZStack {
                 RoundedRectangle(cornerRadius: 25, style: .continuous)
                     .frame(width: 350, height: 400)
@@ -26,27 +40,28 @@ struct ContentView: View {
                     )
                     .opacity(rotationAngle <= 90 || rotationAngle >= 270 ? 1 : 0)
 
-                RoundedRectangle(cornerRadius: 25, style: .continuous)
-                    .frame(width: 350, height: 400)
-                    .foregroundStyle(
-                        LinearGradient(colors: [
-                            .green, .red
-                        ], startPoint: .top, endPoint: .bottom)
-                    )
+                Text("Hello")
                     .rotation3DEffect(
                         .degrees(rotationAngle),
                         axis: (x: 0, y: 1, z: 0)
                     )
-                    .opacity(rotationAngle > 90 && rotationAngle < 270 ? 1 : 0)
+                    .opacity(rotationAngle <= 90 || rotationAngle >= 270 ? 1 : 0)
             }
-            .padding(.top, 50)
 
-            Spacer()
-            Slider(value: $rotationAngle, in: 0...360, step: 1)
-                .padding()
-            Text("\(Double(rotationAngle))")
-                .contentTransition(.numericText(value: rotationAngle))
+            RoundedRectangle(cornerRadius: 25, style: .continuous)
+                .frame(width: 350, height: 400)
+                .foregroundStyle(
+                    LinearGradient(colors: [
+                        .green, .red
+                    ], startPoint: .top, endPoint: .bottom)
+                )
+                .rotation3DEffect(
+                    .degrees(rotationAngle),
+                    axis: (x: 0, y: 1, z: 0)
+                )
+                .opacity(rotationAngle > 90 && rotationAngle < 270 ? 1 : 0)
         }
+        .padding(.top, 50)
     }
 }
 
